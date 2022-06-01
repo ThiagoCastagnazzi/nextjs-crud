@@ -55,11 +55,10 @@ export default function Home() {
     if (!isValidFormData()) return
 
     try {
-      const response = await api.post('/clients', {name, email})
+      const {data} = await api.post('/clients', {name, email})
 
-      setClients(
-        clients.concat({ name, email })
-      );
+      setClients(clients.concat(data.data))
+
       setName("");
       setEmail("");
       toggleFormState()
@@ -74,8 +73,9 @@ export default function Home() {
     if(!isValidFormData()) return
 
     try {
-      await api.put(`/clients/${id}` / {name, email})
+      await api.put(`/clients/${id}`, {name, email})
       setClients(clients.map(client => client._id == id ? {name, email, _id: id} : client));
+
       setId(null);
       setName("");
       setEmail("");
